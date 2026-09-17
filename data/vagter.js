@@ -1,5 +1,14 @@
+// Dette er vores (foreløbige) datakilde: en almindelig JavaScript-array af
+// objekter, der hver repræsenterer én vagt. Senere kan denne fil nemt
+// erstattes af data fra et API eller en database — resten af app'en behøver
+// ikke ændres, så længe formen (id, sted, post, dato, tid, kontakt) er den samme.
+// Det kaldes ofte "mock data" eller "seed data", når man bruger det til
+// udvikling/test, inden der er en rigtig backend tilkoblet.
 export const vagter = [
   {
+    // id skal være unikt for hver vagt. FlatList (i VagtListeScreen) bruger
+    // dette id til effektivt at holde styr på, hvilket element der er hvilket,
+    // når listen skal opdateres eller genoptegnes.
     id: '1',
     sted: 'Roskilde Festival',
     post: 'Port 4 — indgangskontrol',
