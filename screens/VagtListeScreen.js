@@ -6,14 +6,19 @@
 //   elementer på én gang (som man ville med .map()), renderer FlatList kun de
 //   elementer, der rent faktisk er synlige på skærmen ("virtualisering").
 //   Det gør den langt hurtigere end en almindelig scroll-view med mange elementer.
-import { View, Text, FlatList } from 'react-native';
+// - Pressable er React Natives generelle "tryk-på-mig"-komponent. Den fungerer
+//   som en View, men kan reagere på berøring via fx onPress.
+import { View, Text, FlatList, Pressable } from 'react-native';
 import { vagter } from '../data/vagter';
 import { globalStyles } from '../styles/globalStyles';
 
-// VagtListeScreen er en "function component" — den modtager ingen props her,
-// men i React Navigation ville den normalt også kunne modtage { navigation, route }
-// som parameter, hvis vi skulle navigere videre til andre skærme.
-export default function VagtListeScreen() {
+// VagtListeScreen modtager nu "navigation" som prop. Det sker automatisk:
+// når en komponent er registreret som en Stack.Screen (se App.js), sender
+// React Navigation altid et "navigation"-objekt med ind som prop, som man kan
+// bruge til at skifte skærm — fx navigation.navigate('SkærmNavn').
+// { navigation } her er destructuring af props-objektet, samme mønster som
+// { item } bruges nedenfor i renderItem.
+export default function VagtListeScreen({ navigation }) {
   return (
     // Selve skærmens container. globalStyles.container giver den fx
     // baggrundsfarve og padding — se styles/globalStyles.js.
@@ -30,7 +35,17 @@ export default function VagtListeScreen() {
         // "item" — altså den enkelte vagt. Funktionen returnerer den JSX,
         // der skal vises for netop dén vagt.
         renderItem={({ item }) => (
-          <View style={globalStyles.kort}>
+          // Kortet er nu en Pressable i stedet for en View, så hele kortet
+          // kan trykkes på. onPress kaldes, når brugeren trykker, og navigerer
+          // videre til 'VagtDetaljer'-skærmen.
+          // Det andet argument til navigate() er route-params — data, der
+          // sendes med til den nye skærm. Her sender vi hele vagt-objektet
+          // (item) med, så VagtDetaljer kan vise detaljer uden at skulle
+          // slå vagten op igen.
+          <Pressable
+            style={globalStyles.kort}
+            onPress={() => navigation.navigate('VagtDetaljer', { vagt: item })}
+          >
             <Text style={globalStyles.kortTitel}>{item.sted}</Text>
             {/* {} lader os indsætte JavaScript-værdier midt i JSX-teksten.
                 Her sætter vi dato og tid sammen med en lille skilletegn (·) imellem. */}
@@ -38,7 +53,7 @@ export default function VagtListeScreen() {
               {item.dato} · {item.tid}
             </Text>
             <Text style={globalStyles.kortTekst}>{item.post}</Text>
-          </View>
+          </Pressable>
         )}
       />
     </View>

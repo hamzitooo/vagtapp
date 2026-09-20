@@ -46,4 +46,47 @@ export const globalStyles = StyleSheet.create({
     color: farver.dæmpet,
     fontSize: 14,
   },
+  // overskrift: stor titel-tekst, fx øverst på en detalje-skærm.
+  overskrift: {
+    color: farver.tekst,
+    fontSize: 24,
+    fontWeight: '700',
+    marginBottom: 16,
+  },
+  // label: lille, dæmpet tekst der beskriver et felt (fx "Sted" eller "Tidspunkt")
+  // — bruges typisk lige over den tilhørende værdi.
+  label: {
+    color: farver.dæmpet,
+    fontSize: 13,
+    marginTop: 12,
+  },
+  // værdi: selve indholdet/svaret til et label (fx "Roskilde Festival").
+  værdi: {
+    color: farver.tekst,
+    fontSize: 16,
+  },
+  // besked: løbende brødtekst, fx en note eller besked fra vagtlederen.
+  // lineHeight sætter afstanden mellem linjer, så længere tekst er lettere at læse.
+  besked: {
+    color: farver.tekst,
+    fontSize: 16,
+    lineHeight: 24,
+  },
+  // knap: en trykbar knap-beholder, typisk brugt sammen med TouchableOpacity/Pressable.
+  // alignItems: 'center' centrerer indholdet (fx knapTekst) vandret inde i knappen.
+  knap: {
+    backgroundColor: farver.accent,
+    borderRadius: 12,
+    padding: 16,
+    alignItems: 'center',
+    marginTop: 24,
+  },
+  // knapTekst: teksten inde i knappen. Sort tekst, fordi accentfarven (gul/orange)
+  // er lys og derfor giver bedst kontrast med mørk tekst i stedet for hvid.
+  knapTekst: {
+    color: '#000000',
+    fontSize: 16,
+    fontWeight: '600',
+  },
 });
+

@@ -1,14 +1,16 @@
 // NavigationContainer holder styr på hele app'ens navigations-tilstand
 // (hvilken skærm man er på, historik osv.). Den skal altid ligge yderst,
 // og der må kun være ÉN i hele app'en.
-import { NavigationContainer } from '@react-navigation/native';
+import VagtDetaljerScreen from "./screens/VagtDetaljerScreen";
+import AfgivVagtScreen from "./screens/AfgivVagtScreen";
+import { NavigationContainer } from "@react-navigation/native";
 // createNativeStackNavigator opretter en "stak" af skærme, ligesom en bunke
 // kort — nye skærme lægges ovenpå, og "tilbage" fjerner det øverste kort igen.
 // Den bruger native navigations-animationer (samme følelse som en rigtig iOS/Android-app).
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { StatusBar } from 'expo-status-bar';
-import VagtListeScreen from './screens/VagtListeScreen';
-import { farver } from './styles/globalStyles';
+import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { StatusBar } from "expo-status-bar";
+import VagtListeScreen from "./screens/VagtListeScreen";
+import { farver } from "./styles/globalStyles";
 
 // Stack er selve navigatoren. Vi kalder den én gang og bruger den til at
 // definere hvilke skærme app'en har via <Stack.Navigator> og <Stack.Screen>.
@@ -40,7 +42,17 @@ export default function App() {
         <Stack.Screen
           name="MineVagter"
           component={VagtListeScreen}
-          options={{ title: 'Mine vagter' }}
+          options={{ title: "Mine vagter" }}
+        />
+        <Stack.Screen
+          name="VagtDetaljer"
+          component={VagtDetaljerScreen}
+          options={{ title: "Vagtdetaljer" }}
+        />
+        <Stack.Screen
+          name="AfgivVagt"
+          component={AfgivVagtScreen}
+          options={{ title: "Afgiv vagt" }}
         />
       </Stack.Navigator>
     </NavigationContainer>
