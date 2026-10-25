@@ -2,7 +2,7 @@
 
 Vagtapp samler event- og festivalvagters vagter ét sted – også når de arbejder for flere bureauer – og gør det muligt at bytte en vagt med vagtlederens godkendelse direkte i appen.
 
-**Demovideo (G2):** [INDSÆT LINK]
+**Demovideo (G2):** [https://youtube.com/shorts/krQ_rqRSYJQ]
 
 Godkendelsesopgave 2, Innovation og ny teknologi (INNT), CBS, efterår 2026. Individuel aflevering – al kode er skrevet af mig.
 
