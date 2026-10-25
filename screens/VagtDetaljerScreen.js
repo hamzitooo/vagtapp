@@ -1,3 +1,7 @@
+// screens/VagtDetaljerScreen.js
+// Detaljer om én vagt. Nyt i G2: bureau og krav til posten vises,
+// og "Afgiv vagt"-knappen vises kun, hvis vagten ikke allerede er slået op.
+
 import { View, Text, Pressable } from 'react-native';
 import { globalStyles } from '../styles/globalStyles';
 
@@ -6,6 +10,7 @@ export default function VagtDetaljerScreen({ route, navigation }) {
 
   return (
     <View style={globalStyles.container}>
+      <Text style={globalStyles.bureauMærkat}>{vagt.bureau}</Text>
       <Text style={globalStyles.overskrift}>{vagt.sted}</Text>
 
       <Text style={globalStyles.label}>Post</Text>
@@ -20,12 +25,17 @@ export default function VagtDetaljerScreen({ route, navigation }) {
       <Text style={globalStyles.label}>Vagtleder</Text>
       <Text style={globalStyles.værdi}>{vagt.kontakt}</Text>
 
-      <Pressable
-        style={globalStyles.knap}
-        onPress={() => navigation.navigate('AfgivVagt', { vagt })}
-      >
-        <Text style={globalStyles.knapTekst}>Afgiv vagt</Text>
-      </Pressable>
+      <Text style={globalStyles.label}>Krav til posten</Text>
+      <Text style={globalStyles.værdi}>{(vagt.kræver || []).join(', ')}</Text>
+
+      {vagt.status === 'aktiv' && (
+        <Pressable
+          style={globalStyles.knap}
+          onPress={() => navigation.navigate('AfgivVagt', { vagt })}
+        >
+          <Text style={globalStyles.knapTekst}>Afgiv vagt</Text>
+        </Pressable>
+      )}
     </View>
   );
 }
