@@ -1,60 +1,106 @@
-// NavigationContainer holder styr på hele app'ens navigations-tilstand
-// (hvilken skærm man er på, historik osv.). Den skal altid ligge yderst,
-// og der må kun være ÉN i hele app'en.
-import VagtDetaljerScreen from "./screens/VagtDetaljerScreen";
-import AfgivVagtScreen from "./screens/AfgivVagtScreen";
-import { NavigationContainer } from "@react-navigation/native";
-// createNativeStackNavigator opretter en "stak" af skærme, ligesom en bunke
-// kort — nye skærme lægges ovenpå, og "tilbage" fjerner det øverste kort igen.
-// Den bruger native navigations-animationer (samme følelse som en rigtig iOS/Android-app).
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { StatusBar } from "expo-status-bar";
-import VagtListeScreen from "./screens/VagtListeScreen";
-import { farver } from "./styles/globalStyles";
+// App.js
+// G1: én stack-navigation med tre skærme.
+// G2: tab-navigation i bunden med tre faner. Fanen "Mine vagter" indeholder
+// stadig stacken fra G1 (liste → detaljer → afgiv), så den virker som før.
 
-// Stack er selve navigatoren. Vi kalder den én gang og bruger den til at
-// definere hvilke skærme app'en har via <Stack.Navigator> og <Stack.Screen>.
+import { useEffect } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { StatusBar } from 'expo-status-bar';
+import { Ionicons } from '@expo/vector-icons';
+import VagtListeScreen from './screens/VagtListeScreen';
+import VagtDetaljerScreen from './screens/VagtDetaljerScreen';
+import AfgivVagtScreen from './screens/AfgivVagtScreen';
+import LedigeVagterScreen from './screens/LedigeVagterScreen';
+import GodkendScreen from './screens/GodkendScreen';
+import { opretStartdataHvisTom } from './services/vagtService';
+import { farver } from './styles/globalStyles';
+
 const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
-// App er ROD-komponenten (root component) — den component alle andre
-// komponenter i app'en ligger inde i. Det er en "function component":
-// en almindelig JavaScript-funktion, der returnerer JSX (markup, der ligner HTML,
-// men som faktisk er JavaScript under motorhjelmen).
-export default function App() {
+// Fælles udseende for alle headers
+const headerUdseende = {
+  headerStyle: { backgroundColor: farver.kort },
+  headerTintColor: farver.tekst,
+};
+
+// Stacken fra G1 – nu pakket ind i sin egen komponent, så den kan ligge i en fane
+function MineVagterStack() {
   return (
-    <NavigationContainer>
-      {/* StatusBar styrer udseendet af telefonens statuslinje (klokkeslæt, batteri osv.)
-          øverst på skærmen. style="light" gør ikonerne hvide, så de kan ses
-          på vores mørke baggrund. */}
+    <Stack.Navigator screenOptions={headerUdseende}>
+      <Stack.Screen
+        name="MineVagter"
+        component={VagtListeScreen}
+        options={{ title: 'Mine vagter' }}
+      />
+      <Stack.Screen
+        name="VagtDetaljer"
+        component={VagtDetaljerScreen}
+        options={{ title: 'Vagtdetaljer' }}
+      />
+      <Stack.Screen
+        name="AfgivVagt"
+        component={AfgivVagtScreen}
+        options={{ title: 'Afgiv vagt' }}
+      />
+    </Stack.Navigator>
+  );
+}
+
+export default function App() {
+  // Første gang appen åbner, lægges startdata op i Firebase (kun hvis tom)
+  useEffect(() => {
+    opretStartdataHvisTom();
+  }, []);
+
+  return (
+    <>
       <StatusBar style="light" />
-      <Stack.Navigator
-        // screenOptions sætter standard-udseende for ALLE skærme i denne navigator,
-        // så vi ikke skal style headeren på hver enkelt skærm for sig.
-        screenOptions={{
-          headerStyle: { backgroundColor: farver.kort },
-          headerTintColor: farver.tekst,
-        }}
-      >
-        {/* Hver Stack.Screen er én "side" i app'en.
-            - name: det interne navn navigatoren bruger til at referere til skærmen
-            - component: hvilken React-komponent der skal vises
-            - options: skærm-specifikke indstillinger, her titlen i headeren */}
-        <Stack.Screen
-          name="MineVagter"
-          component={VagtListeScreen}
-          options={{ title: "Mine vagter" }}
-        />
-        <Stack.Screen
-          name="VagtDetaljer"
-          component={VagtDetaljerScreen}
-          options={{ title: "Vagtdetaljer" }}
-        />
-        <Stack.Screen
-          name="AfgivVagt"
-          component={AfgivVagtScreen}
-          options={{ title: "Afgiv vagt" }}
-        />
-      </Stack.Navigator>
-    </NavigationContainer>
+      <NavigationContainer>
+        <Tab.Navigator
+          screenOptions={{
+            ...headerUdseende,
+            tabBarStyle: { backgroundColor: farver.kort, borderTopColor: farver.kort },
+            tabBarActiveTintColor: farver.accent,
+            tabBarInactiveTintColor: farver.dæmpet,
+          }}
+        >
+          <Tab.Screen
+            name="MineVagterTab"
+            component={MineVagterStack}
+            options={{
+              title: 'Mine vagter',
+              headerShown: false, // stacken har sin egen header
+              tabBarIcon: ({ color, size }) => (
+                <Ionicons name="calendar-outline" color={color} size={size} />
+              ),
+            }}
+          />
+          <Tab.Screen
+            name="Ledige"
+            component={LedigeVagterScreen}
+            options={{
+              title: 'Ledige vagter',
+              tabBarIcon: ({ color, size }) => (
+                <Ionicons name="swap-horizontal-outline" color={color} size={size} />
+              ),
+            }}
+          />
+          <Tab.Screen
+            name="Godkend"
+            component={GodkendScreen}
+            options={{
+              title: 'Godkend (vagtleder)',
+              tabBarLabel: 'Godkend',
+              tabBarIcon: ({ color, size }) => (
+                <Ionicons name="checkmark-done-outline" color={color} size={size} />
+              ),
+            }}
+          />
+        </Tab.Navigator>
+      </NavigationContainer>
+    </>
   );
 }
