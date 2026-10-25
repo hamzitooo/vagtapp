@@ -1,79 +1,62 @@
+// styles/globalStyles.js
+// Al styling for appen samlet ét sted. Farverne står øverst, så en
+// farveændring kun skal laves ét sted.
+
 import { StyleSheet } from 'react-native';
 
-// farver samler alle app'ens farver ét sted (et "design token"-mønster).
-// Fordelen: skal appens farvetema ændres, rettes det kun her — ikke i hver enkelt
-// komponent, der bruger farverne. Det gør det også nemt at se og huske,
-// hvilke farver der overhovedet findes i app'en.
 export const farver = {
-  baggrund: '#121212', // mørk baggrund til hele skærmen
-  kort: '#1f1f1f',     // lidt lysere end baggrunden, så "kort" (vagt-bokse) skiller sig ud
-  tekst: '#ffffff',    // primær tekstfarve (hvid, for kontrast mod mørk baggrund)
-  dæmpet: '#9e9e9e',   // sekundær/mindre vigtig tekst (grå, mindre kontrast)
-  accent: '#ffb300',   // farve til fx knapper eller ting, der skal fremhæves
+  baggrund: '#121212',
+  kort: '#1f1f1f',
+  tekst: '#ffffff',
+  dæmpet: '#9e9e9e',
+  accent: '#ffb300',
+  grøn: '#4caf50',
+  rød: '#e57373',
 };
 
-// StyleSheet.create() minder om CSS, men er React Natives egen løsning til styling.
-// I modsætning til CSS på web findes der ingen klasser eller filer, der deles på
-// tværs — styles er JavaScript-objekter, der importeres direkte i den komponent,
-// der skal bruge dem. StyleSheet.create() validerer stilene og optimerer dem,
-// så de kan genbruges effektivt i stedet for at oprette nye objekter, hver gang
-// komponenten tegnes igen.
 export const globalStyles = StyleSheet.create({
-  // container: den ydre ramme om hele skærmen.
-  // flex: 1 betyder "fyld al tilgængelig plads" — svarer til height: 100% på web,
-  // men React Native bruger Flexbox som sit primære layout-system.
+  // --- Fra G1 ---
   container: {
     flex: 1,
     backgroundColor: farver.baggrund,
     padding: 16,
   },
-  // kort: styling for hver enkelt "vagt-boks" i listen.
   kort: {
     backgroundColor: farver.kort,
-    borderRadius: 12,   // runde hjørner
+    borderRadius: 12,
     padding: 16,
-    marginBottom: 12,   // luft ned til næste kort i listen
+    marginBottom: 12,
   },
-  // kortTitel: den fremhævede overskrift i et kort (fx stedet for vagten).
   kortTitel: {
     color: farver.tekst,
     fontSize: 18,
-    fontWeight: '600', // halvfed skrift
+    fontWeight: '600',
     marginBottom: 4,
   },
-  // kortTekst: mindre, dæmpet tekst i kortet (fx dato, tid, post).
   kortTekst: {
     color: farver.dæmpet,
     fontSize: 14,
   },
-  // overskrift: stor titel-tekst, fx øverst på en detalje-skærm.
   overskrift: {
     color: farver.tekst,
     fontSize: 24,
     fontWeight: '700',
     marginBottom: 16,
   },
-  // label: lille, dæmpet tekst der beskriver et felt (fx "Sted" eller "Tidspunkt")
-  // — bruges typisk lige over den tilhørende værdi.
   label: {
     color: farver.dæmpet,
     fontSize: 13,
     marginTop: 12,
   },
-  // værdi: selve indholdet/svaret til et label (fx "Roskilde Festival").
   værdi: {
     color: farver.tekst,
     fontSize: 16,
   },
-  // besked: løbende brødtekst, fx en note eller besked fra vagtlederen.
-  // lineHeight sætter afstanden mellem linjer, så længere tekst er lettere at læse.
   besked: {
     color: farver.tekst,
     fontSize: 16,
     lineHeight: 24,
   },
-  // knap: en trykbar knap-beholder, typisk brugt sammen med TouchableOpacity/Pressable.
-  // alignItems: 'center' centrerer indholdet (fx knapTekst) vandret inde i knappen.
   knap: {
     backgroundColor: farver.accent,
     borderRadius: 12,
@@ -81,12 +64,74 @@ export const globalStyles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 24,
   },
-  // knapTekst: teksten inde i knappen. Sort tekst, fordi accentfarven (gul/orange)
-  // er lys og derfor giver bedst kontrast med mørk tekst i stedet for hvid.
   knapTekst: {
     color: '#000000',
     fontSize: 16,
     fontWeight: '600',
   },
-});
 
+  // --- Nyt i G2 ---
+  // Lille mærkat med bureauets navn, så man kan se vagter fra flere bureauer
+  bureauMærkat: {
+    color: farver.accent,
+    fontSize: 12,
+    fontWeight: '600',
+    marginBottom: 6,
+    textTransform: 'uppercase',
+  },
+  // Statuslinje på kortet ("Slået op", "Afventer vagtleder")
+  status: {
+    color: farver.accent,
+    fontSize: 13,
+    marginTop: 8,
+  },
+  // Rød tekst, når man mangler en kvalifikation
+  advarsel: {
+    color: farver.rød,
+    fontSize: 13,
+    marginTop: 8,
+  },
+  ok: {
+    color: farver.grøn,
+    fontSize: 13,
+    marginTop: 8,
+  },
+  // Mindre knap inde i et kort
+  kortKnap: {
+    backgroundColor: farver.accent,
+    borderRadius: 10,
+    paddingVertical: 10,
+    alignItems: 'center',
+    marginTop: 12,
+  },
+  // Gråt udseende, når knappen ikke kan bruges
+  kortKnapDeaktiveret: {
+    backgroundColor: '#3a3a3a',
+  },
+  // To knapper ved siden af hinanden (Godkend / Afvis)
+  knapRække: {
+    flexDirection: 'row',
+    gap: 10,
+    marginTop: 12,
+  },
+  godkendKnap: {
+    flex: 1,
+    backgroundColor: farver.grøn,
+    borderRadius: 10,
+    paddingVertical: 10,
+    alignItems: 'center',
+  },
+  afvisKnap: {
+    flex: 1,
+    backgroundColor: farver.rød,
+    borderRadius: 10,
+    paddingVertical: 10,
+    alignItems: 'center',
+  },
+  tomListe: {
+    color: farver.dæmpet,
+    fontSize: 15,
+    textAlign: 'center',
+    marginTop: 40,
+  },
+});
