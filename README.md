@@ -4,7 +4,7 @@ Vagtapp samler event- og festivalvagters vagter ét sted – også når de arbej
 
 **Demovideo (G2):** [https://youtube.com/shorts/krQ_rqRSYJQ]
 
-Godkendelsesopgave 2, Innovation og ny teknologi (INNT), CBS, efterår 2026. Individuel aflevering – al kode er skrevet af mig.
+Godkendelsesopgave 2, Innovation og ny teknologi (INNT), CBS, efterår 2026. Individuel aflevering
 
 ## Hvad er nyt siden G1
 
@@ -45,7 +45,7 @@ npx expo start
 
 Scan QR-koden med Expo Go.
 
-Appen bruger Firebase Realtime Database. Indsæt dit eget `firebaseConfig` i `firebase.js` (Firebase-konsollen → Project settings → Your apps → Web app). Databasen skal stå i test mode. Første gang appen åbner, lægges startdata automatisk op.
+Appen bruger Firebase Realtime Database. Indsæt dit eget `firebaseConfig` i `firebase.js` (Firebase-konsollen → Project settings → Your apps → Web app). Databasen skal stå i test mode. Første gang appen åbner, lægges startdata automatisk op
 
 **Nulstil demoen:** Slet noden `vagter` i Firebase-konsollen og genstart appen.
 
