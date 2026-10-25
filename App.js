@@ -49,6 +49,25 @@ function MineVagterStack() {
   );
 }
 
+// Fanen "Ledige vagter" har også sin egen stack, så man kan trykke sig ind
+// på en ledig vagt. Vi genbruger VagtDetaljerScreen fra "Mine vagter".
+function LedigeStack() {
+  return (
+    <Stack.Navigator screenOptions={headerUdseende}>
+      <Stack.Screen
+        name="LedigeVagter"
+        component={LedigeVagterScreen}
+        options={{ title: 'Ledige vagter' }}
+      />
+      <Stack.Screen
+        name="VagtDetaljer"
+        component={VagtDetaljerScreen}
+        options={{ title: 'Vagtdetaljer' }}
+      />
+    </Stack.Navigator>
+  );
+}
+
 export default function App() {
   // Første gang appen åbner, lægges startdata op i Firebase (kun hvis tom)
   useEffect(() => {
@@ -80,9 +99,10 @@ export default function App() {
           />
           <Tab.Screen
             name="Ledige"
-            component={LedigeVagterScreen}
+            component={LedigeStack}
             options={{
               title: 'Ledige vagter',
+              headerShown: false, // stacken har sin egen header
               tabBarIcon: ({ color, size }) => (
                 <Ionicons name="swap-horizontal-outline" color={color} size={size} />
               ),
