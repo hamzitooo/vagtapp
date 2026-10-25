@@ -3,6 +3,7 @@
 // og "Afgiv vagt"-knappen vises kun, hvis vagten ikke allerede er slået op.
 
 import { View, Text, Pressable } from 'react-native';
+import { bruger } from '../data/bruger';
 import { globalStyles } from '../styles/globalStyles';
 
 export default function VagtDetaljerScreen({ route, navigation }) {
@@ -24,6 +25,15 @@ export default function VagtDetaljerScreen({ route, navigation }) {
 
       <Text style={globalStyles.label}>Vagtleder</Text>
       <Text style={globalStyles.værdi}>{vagt.kontakt}</Text>
+
+      {/* Skærmen bruges også fra "Ledige vagter". Er vagten en kollegas,
+          viser vi, hvem der har slået den op. */}
+      {vagt.ejer !== bruger.navn && (
+        <>
+          <Text style={globalStyles.label}>Slået op af</Text>
+          <Text style={globalStyles.værdi}>{vagt.ejer}</Text>
+        </>
+      )}
 
       <Text style={globalStyles.label}>Krav til posten</Text>
       <Text style={globalStyles.værdi}>{(vagt.kræver || []).join(', ')}</Text>

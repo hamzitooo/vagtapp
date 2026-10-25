@@ -16,7 +16,7 @@ import {
 import { bruger } from '../data/bruger';
 import { globalStyles } from '../styles/globalStyles';
 
-export default function LedigeVagterScreen() {
+export default function LedigeVagterScreen({ navigation }) {
   const [alleVagter, setAlleVagter] = useState([]);
 
   useEffect(() => {
@@ -61,7 +61,12 @@ export default function LedigeVagterScreen() {
           const kanTage = !erMin && mangler.length === 0;
 
           return (
-            <View style={globalStyles.kort}>
+            // Hele kortet kan trykkes på og åbner vagtdetaljerne.
+            // "Tag vagten"-knappen inde i kortet har sin egen onPress.
+            <Pressable
+              style={globalStyles.kort}
+              onPress={() => navigation.navigate('VagtDetaljer', { vagt: item })}
+            >
               <Text style={globalStyles.bureauMærkat}>{item.bureau}</Text>
               <Text style={globalStyles.kortTitel}>{item.sted}</Text>
               <Text style={globalStyles.kortTekst}>
@@ -84,7 +89,7 @@ export default function LedigeVagterScreen() {
                   <Text style={globalStyles.knapTekst}>Tag vagten</Text>
                 </Pressable>
               )}
-            </View>
+            </Pressable>
           );
         }}
       />
