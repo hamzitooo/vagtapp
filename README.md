@@ -6,16 +6,6 @@ Vagtapp samler event- og festivalvagters vagter ét sted – også når de arbej
 
 Godkendelsesopgave 2, Innovation og ny teknologi (INNT), CBS, efterår 2026. Individuel aflevering
 
-## Hvad er nyt siden G1
-
-| | G1 | G2 |
-|---|---|---|
-| Data | Hårdkodet array i `data/vagter.js` | Firebase Realtime Database – ændringer gemmes og vises live |
-| Navigation | Stack med 3 skærme | Tab-navigation med 3 faner; stacken fra G1 ligger i fanen "Mine vagter" |
-| Afgiv vagt | Ændrede kun lokal state | Gemmer vagten som ledig i databasen |
-| Nye skærme | – | **Ledige vagter** og **Godkend (vagtleder)** |
-| Ny funktionalitet | – | Bytte-flow: afgiv → kollega tager → vagtleder godkender/afviser. Kvalifikationstjek (fx alkoholbevis) og advarsel mod dobbeltbooking på tværs af bureauer |
-
 ## Skærme
 
 1. **Mine vagter** – liste over mine vagter fra alle bureauer, med status.
